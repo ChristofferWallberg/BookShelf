@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    private static final String filepath = "C:\\JavaUdemy\\excercise-9thSept\\src\\book\\files";
     public static void main(String[] args) {
         // Skapar böcker
         Book book1 = new Book("Colour of Magic", "Terry Pratchett", 288,
@@ -87,6 +88,7 @@ public class Main {
         System.out.println("0: Avsluta");
     }
 
+    //Metod för att loopa igenom
 //    public static void printBookTitle(Book book) {
 //        System.out.println(book.getTitle());
 //    }
