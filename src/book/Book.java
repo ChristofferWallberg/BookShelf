@@ -3,9 +3,7 @@ package book;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class Book implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class Book {
     private String title;
     private String author;
     private int numberOfPages;
@@ -52,11 +50,9 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", numberOfPages=" + numberOfPages +
-                ", backText='" + backText + '\'' +
-                '}';
+        return "Title: " + title +
+                "$Author: " + author +
+                "$Number of pages: " + numberOfPages +
+                "$Back text: " + backText;
     }
 }

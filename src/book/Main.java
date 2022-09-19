@@ -1,12 +1,20 @@
 package book;
 
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    private static final String filepath = "C:\\JavaUdemy\\excercise-9thSept\\src\\book\\files";
-    public static void main(String[] args) {
+    private static final String filepath = "C:\\JavaUdemy\\BookShelf\\src\\book\\files\\output";
+
+    public static void main(String[] args) throws IOException {
+        String bookSplitString;
+        String title;
+        String author;
+        String numberOfPages;
+        String backText;
+
         // Skapar böcker
         Book book1 = new Book("Colour of Magic", "Terry Pratchett", 288,
                 "On a world supported on the back of a giant turtle (sex unknown), a gleeful, explosive, " +
@@ -33,13 +41,50 @@ public class Main {
                         "\nto follow our dreams.");
 
         // Skapar bokhyllan
-        Shelf shelf = new Shelf("brun");
+        Shelf shelf = new Shelf("brown");
         // Fyller bokhyllan med böckerna vi skapade
         shelf.getBooks().add(book1);
         shelf.getBooks().add(book2);
         shelf.getBooks().add(book3);
         // Skapar variabel för snabb åtkomst till shelf.getBooks()
         ArrayList<Book> books = shelf.getBooks();
+
+//        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("out.txt")));
+
+        File file = new File("out.txt");
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (Book book : shelf.getBooks()) {
+            String backtextReplace = book.getBackText().replace("\n", "").replace("\r", "");
+            bw.write(book.getAuthor() + "$" + book.getTitle() + "$" + book.getNumberOfPages() + "$" + backtextReplace + "\n");
+        }
+        bw.close();
+
+//        File file = new File("manout.txt");
+        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+
+        while (raf.getFilePointer() < raf.length()) {
+            bookSplitString = raf.readLine();
+            String[] lineSplit = bookSplitString.split("\\$");
+
+            author = lineSplit[0];
+            title = lineSplit[1];
+            numberOfPages = lineSplit[2];
+            backText = lineSplit[3];
+
+            System.out.println("Title: " + title + "\n" +
+                    "Author: " + author + "\n" +
+                    "Number of pages: " + numberOfPages + "\n" +
+                    "Back text: " + backText +
+                    "\n");
+        }
+        String contentLine = raf.readLine();
+        while (contentLine != null) {
+            System.out.println(contentLine);
+            contentLine = raf.readLine();
+        }
+        raf.close();
+
 
         // do while-loop för att hålla användaren i en meny tills man avslutar på egen hand
         int menu;
@@ -58,21 +103,21 @@ public class Main {
             else if (menu == 2) {
                 shelf.printTitles();
                 int choice = scanner.nextInt();
-                System.out.println("Författaren till " + books.get(choice -1).getTitle() + " är " + books.get(choice - 1).getAuthor()
+                System.out.println("The author to " + books.get(choice - 1).getTitle() + " is " + books.get(choice - 1).getAuthor()
                         + ".");
             }
             // Menyval för att visa antal sidor för en bok
             else if (menu == 3) {
                 shelf.printTitles();
                 int choice = scanner.nextInt();
-                System.out.println(books.get(choice -1).getTitle() + " har " + books.get(choice - 1).getNumberOfPages()
-                        + " sidor.");
+                System.out.println(books.get(choice - 1).getTitle() + " have " + books.get(choice - 1).getNumberOfPages()
+                        + " pages.");
             }
             // Menyval för att visa baktexten till en bok
             else if (menu == 4) {
                 shelf.printTitles();
                 int choice = scanner.nextInt();
-                System.out.println(books.get(choice -1).getTitle() + " har den här baktexten: \n"
+                System.out.println(books.get(choice - 1).getTitle() + " have this back text: \n"
                         + books.get(choice - 1).getBackText());
             }
         } while (menu != 0);
@@ -85,8 +130,23 @@ public class Main {
         System.out.println("2: Get author of book");
         System.out.println("3: Get number of pages");
         System.out.println("4: Get back text");
-        System.out.println("0: Avsluta");
+        System.out.println("0: Exit");
     }
+
+//   public static void WriteObjectToFile(Object serObj) {
+//
+//        try {
+//
+//            FileOutputStream fileOut = new FileOutputStream(filepath);
+//            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+//            objectOut.writeObject(serObj);
+//            objectOut.close();
+//            System.out.println("The Object  was succesfully written to a file");
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     //Metod för att loopa igenom
 //    public static void printBookTitle(Book book) {

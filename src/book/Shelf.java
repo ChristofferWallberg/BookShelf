@@ -35,7 +35,12 @@ public class Shelf {
         }
 //        books.forEach(book -> System.out.println(book.getTitle()));
     }
-
+    public void printEachBook() {
+        // Gå igenom varje bok och printa varje attribut till sin egna sträng.
+        for (Book book : books) {
+            books.toString();
+        }
+    }
     public int getIndexOfBook(int x) {
         return getBooks().indexOf(books);
     }
