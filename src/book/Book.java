@@ -1,8 +1,5 @@
 package book;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 public class Book {
     private String title;
     private String author;
