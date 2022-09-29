@@ -1,6 +1,4 @@
 package book;
-
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -40,7 +38,7 @@ public class Main {
         shelf.getBooks().add(book3);
         // Skapar variabel för snabb åtkomst till shelf.getBooks()
         ArrayList<Book> books = shelf.getBooks();
-        FileUtils.writeToFile(shelf);
+        FileUtils.gsonWriteToFile(shelf);
 
         // do while-loop för att hålla användaren i en meny tills man avslutar på egen hand
         int menu;

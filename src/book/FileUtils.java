@@ -2,6 +2,9 @@ package book;
 
 import java.io.*;
 import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.jetbrains.annotations.NotNull;
 
 public class FileUtils {
     public static void writeToFile(Shelf shelf) throws IOException {
@@ -49,6 +52,20 @@ public class FileUtils {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void gsonWriteToFile(@NotNull Shelf shelf) throws IOException {
+        String jsonString;
+        ArrayList<Book> books = shelf.getBooks();
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+        for (Book book : books) {
+            jsonString = gson.toJson(book);
+            FileWriter jsonFileWrite = new FileWriter(book.getAuthor() + ".json");
+            jsonFileWrite.write(jsonString);
+            jsonFileWrite.close();
         }
     }
 }
